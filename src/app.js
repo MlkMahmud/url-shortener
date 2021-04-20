@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 import { graphqlHTTP } from 'express-graphql';
 import { makeExecutableSchema } from 'graphql-tools';
@@ -22,7 +23,11 @@ app.get('/:id', async (req, res) => {
   const link = await db.url.findUnique({ where: { id } });
   if (link) {
     res.redirect(link.originalUrl);
-  } else res.send('<h1>404</h1>');
+  } else res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+});
+
+app.get('*', (req, res) => {
+  res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 });
 
 export default app;
