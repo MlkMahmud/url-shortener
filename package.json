@@ -4,7 +4,8 @@
   "description": "A url shortener built with GraphQL",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node -r esm src/"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,14 @@
     "eslint": "^7.24.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
+    "esm": "^3.2.25",
     "prisma": "^2.21.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.21.2",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.4"
   }
 }
