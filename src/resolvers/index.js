@@ -1,12 +1,13 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import isValidUrl from 'is-url';
 
 export default {
   Query: {
     shortenUrl: async (_, { url }, context) => {
       try {
-        const [data] = await prisma.$queryRaw(
+        if (!isValidUrl(url)) {
+          throw new Error(`The provided url: ${url} is invalid`);
+        }
+        const [data] = await context.db.$queryRaw(
           `UPDATE url
             SET "isActive" = true,
                 "originalUrl" = $1
@@ -21,8 +22,8 @@ export default {
         );
         return { shortUrl: `https://${context.req.headers.host}/${data.id}` };
       } catch (e) {
-        console.error(e);
-        throw new Error('Internal server error');
+        const message = e.message || 'Internal server error';
+        throw new Error(message);
       }
     },
   },
