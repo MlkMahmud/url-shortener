@@ -17,4 +17,12 @@ app.use('/graphiql', graphqlHTTP((req) => ({
   graphiql: true,
 })));
 
+app.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const link = await db.url.findUnique({ where: { id } });
+  if (link) {
+    res.redirect(link.originalUrl);
+  } else res.send('<h1>404</h1>');
+});
+
 export default app;
