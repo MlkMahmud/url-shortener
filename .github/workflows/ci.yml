@@ -8,22 +8,22 @@ jobs:
   unit-tests:
     runs-on: ubuntu-latest
     services:
-      image: sameersbn/postgresql:12-20200524
-      env: 
-        DB_USER: postgres
-        DB_PASS: password
-        DB_NAME: test
-        PG_PASSWORD: password
-      options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-      ports:
-        - 5432:5432
-    
+        postgres:
+          image: sameersbn/postgresql:12-20200524
+          env: 
+            DB_USER: postgres
+            DB_PASS: password
+            DB_NAME: test
+            PG_PASSWORD: password
+          options: >-
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5
+          ports:
+            - 5432:5432    
     strategy:
-      matrix:
+      matrix: 
         nodejs: [12]
     steps:
       - uses: actions/checkout@v2
@@ -31,16 +31,16 @@ jobs:
         with:
           node-version: ${{ matrix.nodejs }}
 
-        - name: Install dependencies
-          run: npm install
+      - name: Install dependencies
+        run: npm install
         
-        - name: Migrate Databse
-          run: |
-            npm run db:migrate
-            npm run db:generate
+      - name: Migrate Databse
+        run: |
+          npm run db:migrate
+          npm run db:generate
 
-        - name: Test App
-          run: npm run test
+      - name: Test App
+        run: npm run test
         
         env:
           TEST_DATABASE_URL: postgresql://postgres:password@localhost:5432/test?schema=public
