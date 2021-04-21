@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env DATABASE_URL=$TEST_DATABASE_URL jest --forceExit",
-    "dev": "node -r esm src/"
+    "dev": "node -r esm src/",
+    "db:migrate": "prisma migrate",
+    "db:genrate": "prisma generate"
   },
   "repository": {
     "type": "git",
