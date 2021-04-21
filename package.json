@@ -8,8 +8,7 @@
     "dev": "node -r esm src/",
     "db:migrate": "prisma migrate dev",
     "db:generate": "prisma generate",
-    "prestart": "npm run db:generate",
-    "build": "babel src/ --out-dir dist --copy-files",
+    "build": "babel src/ --out-dir dist --copy-files && npm run db:generate",
     "start": "node dist/"
   },
   "repository": {
